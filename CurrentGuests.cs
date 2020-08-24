@@ -33,11 +33,11 @@ namespace Pass
             using (Bitmap heading = new Bitmap(Properties.Resources.RTC, 37, 75))
             {
                 g.DrawImage(heading, e.MarginBounds.X + 2, e.MarginBounds.Y + 2);
-                using (Font font = new Font("TimesNewRoman", 16)
+                using (Font font = new Font("TimesNewRoman", 16))
                 {
-                    g.DrawString("ЦНИИ РТК", font);
+                    g.DrawString("ЦНИИ РТК", font, Brushes.Black, new Point(e.MarginBounds.X + 40, e.MarginBounds.Y + 32));
+                }
             }
         }
     }
-}
 }
