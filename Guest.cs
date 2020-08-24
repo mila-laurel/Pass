@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Pass
+{
+    [Serializable]
+    class Guest
+    {
+        public string LastName { get; set; }
+        public string Name { get; set; }
+        public string Patronymic { get; set; }
+        public string Company { get; set; }
+        public string Document { get; set; }
+        public string DocumentNumber { get; set; }
+        public Guest()
+        {
+            LastName = "";
+        }
+
+        public void Save(string lastName)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (Stream output = File.OpenWrite(lastName))
+            {
+                formatter.Serialize(output, this);
+            }
+        }
+
+        public void OpenFile(string lastName)
+        {
+            this.LastName = lastName;
+            BinaryFormatter formatter = new BinaryFormatter();
+            Guest guest;
+            using (Stream input = File.OpenRead(lastName))
+            {
+                guest = (Guest)formatter.Deserialize(input);
+            }
+            Name = guest.Name;
+            Patronymic = guest.Patronymic;
+            Company = guest.Company;
+            Document = guest.Document;
+            DocumentNumber = guest.DocumentNumber;
+        }
+    }
+}

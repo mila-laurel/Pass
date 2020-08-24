@@ -38,11 +38,11 @@
             this.label4 = new System.Windows.Forms.Label();
             this.from = new System.Windows.Forms.ListBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.lastNameBox = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.nameBox = new System.Windows.Forms.TextBox();
+            this.patronymBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -50,9 +50,10 @@
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.document = new System.Windows.Forms.ComboBox();
-            this.componyComboBox = new System.Windows.Forms.ComboBox();
+            this.companyComboBox = new System.Windows.Forms.ComboBox();
             this.textBoxNum = new System.Windows.Forms.TextBox();
             this.buttonOk = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.SuspendLayout();
             // 
             // checkBoxWater
@@ -153,15 +154,16 @@
             this.checkBox2.Text = "И.о.";
             this.checkBox2.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // lastNameBox
             // 
-            this.comboBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.comboBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(99, 317);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(205, 21);
-            this.comboBox1.TabIndex = 10;
+            this.lastNameBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.lastNameBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
+            this.lastNameBox.FormattingEnabled = true;
+            this.lastNameBox.Location = new System.Drawing.Point(99, 317);
+            this.lastNameBox.Name = "lastNameBox";
+            this.lastNameBox.Size = new System.Drawing.Size(205, 21);
+            this.lastNameBox.TabIndex = 10;
+            this.lastNameBox.SelectedIndexChanged += new System.EventHandler(this.lastNameBox_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -181,23 +183,23 @@
             this.label6.TabIndex = 12;
             this.label6.Text = "И";
             // 
-            // textBox1
+            // nameBox
             // 
-            this.textBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.textBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
-            this.textBox1.Location = new System.Drawing.Point(99, 365);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 13;
+            this.nameBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.nameBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
+            this.nameBox.Location = new System.Drawing.Point(99, 365);
+            this.nameBox.Name = "nameBox";
+            this.nameBox.Size = new System.Drawing.Size(100, 20);
+            this.nameBox.TabIndex = 13;
             // 
-            // textBox2
+            // patronymBox
             // 
-            this.textBox2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.textBox2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
-            this.textBox2.Location = new System.Drawing.Point(99, 412);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 15;
+            this.patronymBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.patronymBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
+            this.patronymBox.Location = new System.Drawing.Point(99, 412);
+            this.patronymBox.Name = "patronymBox";
+            this.patronymBox.Size = new System.Drawing.Size(100, 20);
+            this.patronymBox.TabIndex = 15;
             // 
             // label7
             // 
@@ -268,15 +270,15 @@
             this.document.Size = new System.Drawing.Size(121, 21);
             this.document.TabIndex = 23;
             // 
-            // componyComboBox
+            // companyComboBox
             // 
-            this.componyComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.componyComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
-            this.componyComboBox.FormattingEnabled = true;
-            this.componyComboBox.Location = new System.Drawing.Point(387, 317);
-            this.componyComboBox.Name = "componyComboBox";
-            this.componyComboBox.Size = new System.Drawing.Size(199, 21);
-            this.componyComboBox.TabIndex = 24;
+            this.companyComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.companyComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
+            this.companyComboBox.FormattingEnabled = true;
+            this.companyComboBox.Location = new System.Drawing.Point(387, 317);
+            this.companyComboBox.Name = "companyComboBox";
+            this.companyComboBox.Size = new System.Drawing.Size(199, 21);
+            this.companyComboBox.TabIndex = 24;
             // 
             // textBoxNum
             // 
@@ -294,6 +296,7 @@
             this.buttonOk.TabIndex = 26;
             this.buttonOk.Text = "Ok";
             this.buttonOk.UseVisualStyleBackColor = false;
+            this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
             // 
             // Form1
             // 
@@ -303,7 +306,7 @@
             this.ClientSize = new System.Drawing.Size(915, 635);
             this.Controls.Add(this.buttonOk);
             this.Controls.Add(this.textBoxNum);
-            this.Controls.Add(this.componyComboBox);
+            this.Controls.Add(this.companyComboBox);
             this.Controls.Add(this.document);
             this.Controls.Add(this.dateTimePicker2);
             this.Controls.Add(this.dateTimePicker1);
@@ -311,11 +314,11 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.patronymBox);
+            this.Controls.Add(this.nameBox);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.lastNameBox);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.from);
             this.Controls.Add(this.label4);
@@ -345,11 +348,11 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ListBox from;
         private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox lastNameBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox nameBox;
+        private System.Windows.Forms.TextBox patronymBox;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Label label8;
@@ -357,9 +360,10 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
         private System.Windows.Forms.ComboBox document;
-        private System.Windows.Forms.ComboBox componyComboBox;
+        private System.Windows.Forms.ComboBox companyComboBox;
         private System.Windows.Forms.TextBox textBoxNum;
         private System.Windows.Forms.Button buttonOk;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 
