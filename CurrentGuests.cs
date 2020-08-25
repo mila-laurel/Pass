@@ -30,14 +30,26 @@ namespace Pass
         private void Document_PrintPage(object sender, PrintPageEventArgs e)
         {
             Graphics g = e.Graphics;
+            Size stringSize;
             using (Bitmap heading = new Bitmap(Properties.Resources.RTC, 37, 75))
             {
-                g.DrawImage(heading, e.MarginBounds.X + 2, e.MarginBounds.Y + 2);
-                using (Font font = new Font("TimesNewRoman", 16))
-                {
-                    g.DrawString("ЦНИИ РТК", font, Brushes.Black, new Point(e.MarginBounds.X + 40, e.MarginBounds.Y + 32));
-                }
+                g.DrawImage(heading, e.MarginBounds.X, e.MarginBounds.Y);
             }
+            using (Font font16 = new Font("TimesNewRoman", 16))
+            {
+                g.DrawString("ЦНИИ РТК", font16, Brushes.Black, new Point(e.MarginBounds.X + 40, e.MarginBounds.Y + 30));
+            }
+            using (Font font26 = new Font("TimesNewRoman", 26))
+            {
+                stringSize = Size.Ceiling(g.MeasureString("СЛУЖЕБНАЯ ЗАПИСКА", font26));
+                g.DrawString("СЛУЖЕБНАЯ ЗАПИСКА", font26, Brushes.Black, new Point((e.MarginBounds.Width - stringSize.Width) / 2, e.MarginBounds.Y + 100));
+            }.
+            using (Font font14Bold = new Font("TimesNewRoman", 14, FontStyle.Bold))
+            {
+                g.DrawString("Кому", font14Bold, Brushes.Black, new Point((e.MarginBounds.Width - stringSize.Width) / 2, e.MarginBounds.Y + 100));
+                
+            }
+
         }
     }
 }

@@ -54,6 +54,8 @@
             this.textBoxNum = new System.Windows.Forms.TextBox();
             this.buttonOk = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.checkBoxCar = new System.Windows.Forms.CheckBox();
+            this.carInformation = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // checkBoxWater
@@ -298,12 +300,31 @@
             this.buttonOk.UseVisualStyleBackColor = false;
             this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
             // 
+            // checkBoxCar
+            // 
+            this.checkBoxCar.AutoSize = true;
+            this.checkBoxCar.Location = new System.Drawing.Point(61, 499);
+            this.checkBoxCar.Name = "checkBoxCar";
+            this.checkBoxCar.Size = new System.Drawing.Size(67, 17);
+            this.checkBoxCar.TabIndex = 27;
+            this.checkBoxCar.Text = "Машина";
+            this.checkBoxCar.UseVisualStyleBackColor = true;
+            // 
+            // carInformation
+            // 
+            this.carInformation.Location = new System.Drawing.Point(176, 499);
+            this.carInformation.Name = "carInformation";
+            this.carInformation.Size = new System.Drawing.Size(208, 20);
+            this.carInformation.TabIndex = 28;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ClientSize = new System.Drawing.Size(915, 635);
+            this.Controls.Add(this.carInformation);
+            this.Controls.Add(this.checkBoxCar);
             this.Controls.Add(this.buttonOk);
             this.Controls.Add(this.textBoxNum);
             this.Controls.Add(this.companyComboBox);
@@ -364,6 +385,8 @@
         private System.Windows.Forms.TextBox textBoxNum;
         private System.Windows.Forms.Button buttonOk;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.CheckBox checkBoxCar;
+        private System.Windows.Forms.TextBox carInformation;
     }
 }
 
