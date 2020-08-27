@@ -16,7 +16,7 @@ namespace Pass
     {
         private CurrentGuests guests = new CurrentGuests();
         private Guest guest = new Guest();
-        private string selectedFolder = "";
+        private string selectedFolder = @"C:\Users\ЛавроваЛЮ\Documents\пропуска\new";
         private bool formChanged = false;
         public Form1()
         {
@@ -33,14 +33,6 @@ namespace Pass
                 lastNameBox.Items.AddRange(Array.FindAll(guestsWhoHaveVisited, x => x.ToString().ToLower().Contains(lastNameBox.Text.ToLower())));
                 guest.OpenFile(lastNameBox.SelectedItem.ToString());
             }
-            else
-            {
-                guest.LastName = this.lastNameBox.Text;
-                guest.Name = this.nameBox.Text;
-                guest.Company = this.companyComboBox.Text;
-                guest.Document = this.document.Text;
-                guest.DocumentNumber = this.textBoxNum.Text;
-            }
         }
 
         private void buttonOk_Click(object sender, EventArgs e)
@@ -50,6 +42,11 @@ namespace Pass
                 MessageBox.Show("Please fill out the form", "Nothing To Save", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
+            guest.LastName = this.lastNameBox.Text;
+            guest.Name = this.nameBox.Text;
+            guest.Company = this.companyComboBox.Text;
+            guest.Document = this.document.Text;
+            guest.DocumentNumber = this.textBoxNum.Text;
             saveFileDialog1.InitialDirectory = selectedFolder;
             if (File.Exists(lastNameBox.Text))
                 saveFileDialog1.FileName = lastNameBox.Text + " " + nameBox.Text;
