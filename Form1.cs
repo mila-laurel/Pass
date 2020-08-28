@@ -18,6 +18,7 @@ namespace Pass
         private Guest guest = new Guest();
         private string selectedFolder = @"C:\Users\ЛавроваЛЮ\Documents\пропуска\new";
         private bool formChanged = false;
+        private Note note;
         public Form1()
         {
             InitializeComponent();
@@ -55,6 +56,11 @@ namespace Pass
             DialogResult result = saveFileDialog1.ShowDialog();
             if (result == DialogResult.OK)
                 guest.Save(guest.LastName);
+        }
+
+        private void toWhom_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            note = new Note((Adressee)toWhom.SelectedItem);
         }
     }
 }

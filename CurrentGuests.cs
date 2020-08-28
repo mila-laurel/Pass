@@ -52,17 +52,16 @@ namespace Pass
                 nextLine = new Point(e.MarginBounds.X, e.MarginBounds.Y + 100 + stringSize.Height * 2);
                 stringSize = Size.Ceiling(g.MeasureString("Кому", font14Bold));
                 g.DrawString("Кому:", font14Bold, Brushes.Black, nextLine);
-                g.DrawString(note.Adressee, font14, Brushes.Black, nextLine.X + 100, nextLine.Y);
+                g.DrawString(note.ToWhom, font14, Brushes.Black, nextLine.X + 100, nextLine.Y);
                 nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 5);
                 g.DrawString("От:", font14Bold, Brushes.Black, nextLine);
-                g.DrawString(note.Adressee, font14, Brushes.Black, nextLine.X + 100, nextLine.Y);
+                g.DrawString(note.From, font14, Brushes.Black, nextLine.X + 100, nextLine.Y);
                 nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 5);
-                g.DrawString(note.Adressee, font14, Brushes.Black, nextLine.X + 100, nextLine.Y);
                 g.DrawString("Дата:", font14Bold, Brushes.Black, nextLine);
                 g.DrawString(DateTime.Now.ToString("dd.MM.yyyy"), font14, Brushes.Black, nextLine.X + 100, nextLine.Y);
                 nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 5);
                 g.DrawString("Заголовок:", font14Bold, Brushes.Black, nextLine);
-                g.DrawString(note.Adressee, font14, Brushes.Black, nextLine.X + 100, nextLine.Y);
+                g.DrawString("О выдаче разовых пропусков", font14, Brushes.Black, nextLine.X + 100, nextLine.Y);
                 nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 5);
             }
             g.DrawLine(Pens.Black, nextLine, new Point(e.MarginBounds.Right, nextLine.Y));

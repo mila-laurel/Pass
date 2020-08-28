@@ -114,12 +114,13 @@
             this.toWhom.AllowDrop = true;
             this.toWhom.FormattingEnabled = true;
             this.toWhom.Items.AddRange(new object[] {
-            "Иванов Александр Владиславович",
-            "Павлов Андрей Игоревич"});
+            "ИвановАВ",
+            "ПавловАИ"});
             this.toWhom.Location = new System.Drawing.Point(99, 140);
             this.toWhom.Name = "toWhom";
             this.toWhom.Size = new System.Drawing.Size(205, 43);
             this.toWhom.TabIndex = 6;
+            this.toWhom.SelectedIndexChanged += new System.EventHandler(this.toWhom_SelectedIndexChanged);
             // 
             // label4
             // 

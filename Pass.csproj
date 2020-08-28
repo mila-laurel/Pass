@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adressee.cs" />
     <Compile Include="CurrentGuests.cs">
       <SubType>Form</SubType>
     </Compile>
