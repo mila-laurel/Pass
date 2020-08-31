@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pass
 {
-    enum Adressee
+    public enum Adressee
     {
         ИвановАВ,
         ПавловАИ

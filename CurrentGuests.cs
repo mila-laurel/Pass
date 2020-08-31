@@ -13,7 +13,7 @@ namespace Pass
 {
     public partial class CurrentGuests : Form
     {
-        private Note note = new Note();
+        public Note Note { get; set; }
         public CurrentGuests()
         {
             InitializeComponent();
@@ -52,10 +52,10 @@ namespace Pass
                 nextLine = new Point(e.MarginBounds.X, e.MarginBounds.Y + 100 + stringSize.Height * 2);
                 stringSize = Size.Ceiling(g.MeasureString("Кому", font14Bold));
                 g.DrawString("Кому:", font14Bold, Brushes.Black, nextLine);
-                g.DrawString(note.ToWhom, font14, Brushes.Black, nextLine.X + 100, nextLine.Y);
+                g.DrawString(Note.ToWhom, font14, Brushes.Black, nextLine.X + 100, nextLine.Y);
                 nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 5);
                 g.DrawString("От:", font14Bold, Brushes.Black, nextLine);
-                g.DrawString(note.From, font14, Brushes.Black, nextLine.X + 100, nextLine.Y);
+                g.DrawString(Note.From, font14, Brushes.Black, nextLine.X + 100, nextLine.Y);
                 nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 5);
                 g.DrawString("Дата:", font14Bold, Brushes.Black, nextLine);
                 g.DrawString(DateTime.Now.ToString("dd.MM.yyyy"), font14, Brushes.Black, nextLine.X + 100, nextLine.Y);

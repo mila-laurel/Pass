@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.checkBoxWater = new System.Windows.Forms.CheckBox();
             this.dateFrom = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
@@ -56,6 +57,11 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.checkBoxCar = new System.Windows.Forms.CheckBox();
             this.carInformation = new System.Windows.Forms.TextBox();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.printNoteButton = new System.Windows.Forms.ToolStripButton();
+            this.printPassButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // checkBoxWater
@@ -318,12 +324,53 @@
             this.carInformation.Size = new System.Drawing.Size(208, 20);
             this.carInformation.TabIndex = 28;
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToolStripButton,
+            this.printNoteButton,
+            this.printPassButton});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 610);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(915, 25);
+            this.toolStrip1.TabIndex = 29;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // saveToolStripButton
+            // 
+            this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
+            this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveToolStripButton.Name = "saveToolStripButton";
+            this.saveToolStripButton.Size = new System.Drawing.Size(23, 22);
+            this.saveToolStripButton.Text = "&Save";
+            // 
+            // printNoteButton
+            // 
+            this.printNoteButton.Image = ((System.Drawing.Image)(resources.GetObject("printNoteButton.Image")));
+            this.printNoteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.printNoteButton.Name = "printNoteButton";
+            this.printNoteButton.Size = new System.Drawing.Size(100, 22);
+            this.printNoteButton.Text = "Print Записку";
+            this.printNoteButton.Click += new System.EventHandler(this.printNoteButton_Click);
+            // 
+            // printPassButton
+            // 
+            this.printPassButton.Image = ((System.Drawing.Image)(resources.GetObject("printPassButton.Image")));
+            this.printPassButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.printPassButton.Name = "printPassButton";
+            this.printPassButton.Size = new System.Drawing.Size(103, 22);
+            this.printPassButton.Text = "&Print Пропуск";
+            this.printPassButton.Click += new System.EventHandler(this.printPassButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ClientSize = new System.Drawing.Size(915, 635);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.carInformation);
             this.Controls.Add(this.checkBoxCar);
             this.Controls.Add(this.buttonOk);
@@ -353,6 +400,8 @@
             this.Controls.Add(this.checkBoxWater);
             this.Name = "Form1";
             this.Text = "Pass Form";
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -388,6 +437,10 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.CheckBox checkBoxCar;
         private System.Windows.Forms.TextBox carInformation;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton saveToolStripButton;
+        private System.Windows.Forms.ToolStripButton printNoteButton;
+        private System.Windows.Forms.ToolStripButton printPassButton;
     }
 }
 
