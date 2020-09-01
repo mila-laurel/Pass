@@ -28,7 +28,7 @@ namespace Pass
         }
 
         
-        private void lastNameBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void lastNameBox_TextChanged(object sender, EventArgs e)
         {
             string[] guestsWhoHaveVisited = Directory.GetFiles(selectedFolder);
             if (Array.Exists(guestsWhoHaveVisited, x => x.ToString().ToLower().Contains(lastNameBox.Text.ToLower())))
@@ -69,15 +69,17 @@ namespace Pass
             switch (adressee)
             {
                 case Adressee.ИвановАВ:
-                    note.ToWhom = "Начальнику науно-производственного комплекса А.В. Иванову";
+                    note.ToWhom = "Начальнику научно-производственного комплекса А.В. Иванову";
+                    note.Appeal = "Уважаемый Александр Владиславович!";
                     break;
                 case Adressee.ПавловАИ:
                     note.ToWhom = "Начальнику 186 Управления по безопасности А.И. Павлову";
+                    note.Appeal = "Уважаемый Андрей Игоревич!";
                     break;
             }
         }
 
-        private void from_SelectedIndexChanged(object sender, EventArgs e)
+        private void from_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             Responsible responsible = (Responsible)from.SelectedIndex;
             switch (responsible)
@@ -133,30 +135,57 @@ namespace Pass
                 stringSize = Size.Ceiling(g.MeasureString("СЛУЖЕБНАЯ ЗАПИСКА", font26));
                 g.DrawString("СЛУЖЕБНАЯ ЗАПИСКА", font26, Brushes.Black, new Point(e.MarginBounds.X + (e.MarginBounds.Width - stringSize.Width) / 2, e.MarginBounds.Y + 100));
             }
-            using (Font font14Bold = new Font("Times New Roman", 14, FontStyle.Bold))
-            using (Font font14 = new Font("Times New Roman", 14))
+            using (Font font12Bold = new Font("Times New Roman", 12, FontStyle.Bold))
+            using (Font font12 = new Font("Times New Roman", 12))
             {
                 nextLine = new Point(e.MarginBounds.X, e.MarginBounds.Y + 100 + stringSize.Height * 2);
-                stringSize = Size.Ceiling(g.MeasureString("Кому", font14Bold));
-                g.DrawString("Кому:", font14Bold, Brushes.Black, nextLine);
-                g.DrawString(note.ToWhom, font14, Brushes.Black, nextLine.X + 100, nextLine.Y);
+                stringSize = Size.Ceiling(g.MeasureString("Кому", font12Bold));
+                g.DrawString("Кому:", font12Bold, Brushes.Black, nextLine);
+                g.DrawString(note.ToWhom, font12, Brushes.Black, nextLine.X + 100, nextLine.Y);
                 nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 5);
-                g.DrawString("От:", font14Bold, Brushes.Black, nextLine);
-                g.DrawString(note.From, font14, Brushes.Black, nextLine.X + 100, nextLine.Y);
+                g.DrawString("От:", font12Bold, Brushes.Black, nextLine);
+                g.DrawString(note.From, font12, Brushes.Black, nextLine.X + 100, nextLine.Y);
                 nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 5);
-                g.DrawString("Дата:", font14Bold, Brushes.Black, nextLine);
-                g.DrawString(DateTime.Now.ToString("dd.MM.yyyy"), font14, Brushes.Black, nextLine.X + 100, nextLine.Y);
+                g.DrawString("Дата:", font12Bold, Brushes.Black, nextLine);
+                g.DrawString(DateTime.Now.ToString("dd.MM.yyyy"), font12, Brushes.Black, nextLine.X + 100, nextLine.Y);
                 nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 5);
-                g.DrawString("Заголовок:", font14Bold, Brushes.Black, nextLine);
-                g.DrawString("О выдаче разовых пропусков", font14, Brushes.Black, nextLine.X + 100, nextLine.Y);
+                g.DrawString("Заголовок:", font12Bold, Brushes.Black, nextLine);
+                g.DrawString("О выдаче разовых пропусков", font12, Brushes.Black, nextLine.X + 100, nextLine.Y);
                 nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 5);
             }
             g.DrawLine(Pens.Black, nextLine, new Point(e.MarginBounds.Right, nextLine.Y));
+            nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 10);
+            using (Font font14 = new Font("Times New Roman", 14))
+            {
+                stringSize = Size.Ceiling(g.MeasureString(note.Appeal, font14));
+                g.DrawString(note.Appeal, font14, Brushes.Black, new Point(e.MarginBounds.X + (e.MarginBounds.Width - stringSize.Width) / 2, nextLine.Y));
+                nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 6);
+                g.DrawString("Прошу разрешить " + note.Allowance + " на территорию ЦНИИ РТК для участия", font14, Brushes.Black, new Point(e.MarginBounds.X + 48, nextLine.Y));
+                nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 4);
+                g.DrawString("в " + note.Reason + ":", font14, Brushes.Black, new Point(e.MarginBounds.X, nextLine.Y));
+                nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 4);
+            }
+            int tableX = nextLine.X;
+            int tableWidth = e.MarginBounds.Width;
+            int tableY = nextLine.Y;
+            note.PrintTableRow(g, tableX, tableWidth, tableY, new string[] { "Дата и", "время", "посещения" });
         }
 
         private void printPassButton_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void checkBoxGates_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxGates.Checked)
+                note.Allowance = "въезд";
+        }
+
+        private void reasonBox_TextChanged(object sender, EventArgs e)
+        {
+            note.Reason = reasonBox.Text;
+            reasonBox.Items.Add(note.Reason);
         }
     }
 }

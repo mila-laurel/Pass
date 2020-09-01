@@ -45,7 +45,6 @@
             this.nameBox = new System.Windows.Forms.TextBox();
             this.patronymBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
@@ -61,6 +60,8 @@
             this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.printNoteButton = new System.Windows.Forms.ToolStripButton();
             this.printPassButton = new System.Windows.Forms.ToolStripButton();
+            this.checkBoxGates = new System.Windows.Forms.CheckBox();
+            this.reasonBox = new System.Windows.Forms.ComboBox();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -152,6 +153,7 @@
             this.from.Name = "from";
             this.from.Size = new System.Drawing.Size(205, 95);
             this.from.TabIndex = 8;
+            this.from.SelectedIndexChanged += new System.EventHandler(this.from_SelectedIndexChanged_1);
             // 
             // checkBox2
             // 
@@ -172,7 +174,7 @@
             this.lastNameBox.Name = "lastNameBox";
             this.lastNameBox.Size = new System.Drawing.Size(205, 21);
             this.lastNameBox.TabIndex = 10;
-            this.lastNameBox.SelectedIndexChanged += new System.EventHandler(this.lastNameBox_SelectedIndexChanged);
+            this.lastNameBox.TextChanged += new System.EventHandler(this.lastNameBox_TextChanged);
             // 
             // label5
             // 
@@ -218,14 +220,6 @@
             this.label7.Size = new System.Drawing.Size(15, 13);
             this.label7.TabIndex = 16;
             this.label7.Text = "О";
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(326, 28);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(530, 30);
-            this.listBox1.TabIndex = 17;
             // 
             // label8
             // 
@@ -364,12 +358,34 @@
             this.printPassButton.Text = "&Print Пропуск";
             this.printPassButton.Click += new System.EventHandler(this.printPassButton_Click);
             // 
+            // checkBoxGates
+            // 
+            this.checkBoxGates.AutoSize = true;
+            this.checkBoxGates.Location = new System.Drawing.Point(426, 499);
+            this.checkBoxGates.Name = "checkBoxGates";
+            this.checkBoxGates.Size = new System.Drawing.Size(88, 17);
+            this.checkBoxGates.TabIndex = 30;
+            this.checkBoxGates.Text = "Третий пост";
+            this.checkBoxGates.UseVisualStyleBackColor = true;
+            this.checkBoxGates.CheckedChanged += new System.EventHandler(this.checkBoxGates_CheckedChanged);
+            // 
+            // reasonBox
+            // 
+            this.reasonBox.FormattingEnabled = true;
+            this.reasonBox.Location = new System.Drawing.Point(329, 28);
+            this.reasonBox.Name = "reasonBox";
+            this.reasonBox.Size = new System.Drawing.Size(463, 21);
+            this.reasonBox.TabIndex = 31;
+            this.reasonBox.TextChanged += new System.EventHandler(this.reasonBox_TextChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ClientSize = new System.Drawing.Size(915, 635);
+            this.Controls.Add(this.reasonBox);
+            this.Controls.Add(this.checkBoxGates);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.carInformation);
             this.Controls.Add(this.checkBoxCar);
@@ -381,7 +397,6 @@
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.patronymBox);
             this.Controls.Add(this.nameBox);
@@ -425,7 +440,6 @@
         private System.Windows.Forms.TextBox nameBox;
         private System.Windows.Forms.TextBox patronymBox;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
@@ -441,6 +455,8 @@
         private System.Windows.Forms.ToolStripButton saveToolStripButton;
         private System.Windows.Forms.ToolStripButton printNoteButton;
         private System.Windows.Forms.ToolStripButton printPassButton;
+        private System.Windows.Forms.CheckBox checkBoxGates;
+        private System.Windows.Forms.ComboBox reasonBox;
     }
 }
 
