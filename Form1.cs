@@ -85,25 +85,25 @@ namespace Pass
             switch (responsible)
             {
                 case Responsible.АксеновИД:
-                    note.From = "Заместителя начальника научно-производственного комплекса по специальной техники И.Д. Аксенова";
+                    note.From = new string[] { "Заместителя начальника научно-производственного комплекса", "по специальной техники И.Д. Аксенова"};
                     break;
                 case Responsible.ИвановАЕ:
-                    note.From = "Начальника 532 отдела «Конструирования мехатронных и управляющих систем специального назначения» А.Е. Иванова";
+                    note.From = new string[] { "Начальника 532 отдела «Конструирования мехатронных и управляющих", "систем специального назначения» А.Е. Иванова" };
                     break;
                 case Responsible.КоротковАЛ:
-                    note.From = "Начальника 111 отдале «Специалной техники» А.Л. Короткова";
+                    note.From = new string[] { "Начальника 111 отдела «Специальной техники» А.Л. Короткова" };
                     break;
                 case Responsible.ПоповДС:
-                    note.From = "Начальника 52 Конструкторского бюро электронных систем и приборов Д.С. Попова";
+                    note.From = new string[] { "Начальника 52 Конструкторского бюро электронных систем и приборов", "Д.С. Попова" };
                     break;
                 case Responsible.ПрямицынИБ:
-                    note.From = "Начальника 531 отдела «Конструирования робототехнических систем» И.Б. Прямицына";
+                    note.From = new string[] { "Начальника 531 отдела «Конструирования робототехнических систем»", "И.Б. Прямицына" };
                     break;
                 case Responsible.РоговАВ:
-                    note.From = "Начальника 53 Конструкторского бюро мехатронных и корпусных изделий А.В. Рогова";
+                    note.From = new string[] { "Начальника 53 Конструкторского бюро мехатронных и корпусных изделий", "А.В. Рогова" };
                     break;
                 case Responsible.ШмаковОА:
-                    note.From = "Заместителя главного конструктора 11 ЦМРТК О.А. Шмакова";
+                    note.From = new string[] { "Заместителя главного конструктора 11 ЦМРТК О.А. Шмакова" };
                     break;
             }
         }
@@ -144,7 +144,12 @@ namespace Pass
                 g.DrawString(note.ToWhom, font12, Brushes.Black, nextLine.X + 100, nextLine.Y);
                 nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 5);
                 g.DrawString("От:", font12Bold, Brushes.Black, nextLine);
-                g.DrawString(note.From, font12, Brushes.Black, nextLine.X + 100, nextLine.Y);
+                g.DrawString(note.From[0], font12, Brushes.Black, nextLine.X + 100, nextLine.Y);
+                if(note.From.Length > 1)
+                {
+                    nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 2);
+                    g.DrawString(note.From[1], font12, Brushes.Black, nextLine.X + 100, nextLine.Y);
+                }
                 nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 5);
                 g.DrawString("Дата:", font12Bold, Brushes.Black, nextLine);
                 g.DrawString(DateTime.Now.ToString("dd.MM.yyyy"), font12, Brushes.Black, nextLine.X + 100, nextLine.Y);
@@ -160,15 +165,17 @@ namespace Pass
                 stringSize = Size.Ceiling(g.MeasureString(note.Appeal, font14));
                 g.DrawString(note.Appeal, font14, Brushes.Black, new Point(e.MarginBounds.X + (e.MarginBounds.Width - stringSize.Width) / 2, nextLine.Y));
                 nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 6);
-                g.DrawString("Прошу разрешить " + note.Allowance + " на территорию ЦНИИ РТК для участия", font14, Brushes.Black, new Point(e.MarginBounds.X + 48, nextLine.Y));
-                nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 4);
-                g.DrawString("в " + note.Reason + ":", font14, Brushes.Black, new Point(e.MarginBounds.X, nextLine.Y));
+                g.DrawString("Прошу разрешить " + note.Allowance + " на территорию ЦНИИ РТК для " + ((checkBoxWater.Checked) ? "доставки": "участия"), font14, Brushes.Black, new Point(e.MarginBounds.X + 48, nextLine.Y));
+                nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 2);
+                g.DrawString(note.Reason + ":", font14, Brushes.Black, new Point(e.MarginBounds.X, nextLine.Y));
                 nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 4);
             }
+            Point topCornerofTable = new Point(nextLine.X, nextLine.Y);
             int tableX = nextLine.X;
             int tableWidth = e.MarginBounds.Width;
             int tableY = nextLine.Y;
-            note.PrintTableRow(g, tableX, tableWidth, tableY, new string[] { "Дата и", "время", "посещения" });
+            tableY = note.PrintTableRow(g, tableX, tableWidth, tableY, new string[] { "Дата и", "время", "посещения" });
+            g.DrawRectangle(Pens.Black, topCornerofTable.X, topCornerofTable.Y, tableWidth, tableY);
         }
 
         private void printPassButton_Click(object sender, EventArgs e)
@@ -184,8 +191,20 @@ namespace Pass
 
         private void reasonBox_TextChanged(object sender, EventArgs e)
         {
-            note.Reason = reasonBox.Text;
-            reasonBox.Items.Add(note.Reason);
+            if (!checkBoxWater.Checked)
+            {
+                note.Reason = reasonBox.Text;
+                reasonBox.Items.Add(note.Reason);
+            }
+        }
+
+        private void checkBoxWater_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxWater.Checked)
+            {
+                note.Allowance = "въезд";
+                note.Reason = "питьевой воды";
+            }
         }
     }
 }

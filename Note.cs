@@ -10,7 +10,7 @@ namespace Pass
     public class Note
     {
         public string ToWhom { get; set; }
-        public string From { get; set; }
+        public string[] From { get; set; }
         public string Appeal { get; set; }
         public string Allowance { get; set; }
         public string Reason { get; set; }
@@ -18,7 +18,7 @@ namespace Pass
         public Note()
         {
             Allowance = "проход";
-            Reason = "совещании";
+            Reason = "в совещании";
         }
 
         public int PrintTableRow(Graphics printGraphics, int firstColumnX, int tableWidth, int tableY, string[] content)

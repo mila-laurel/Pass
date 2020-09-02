@@ -74,6 +74,7 @@
             this.checkBoxWater.TabIndex = 0;
             this.checkBoxWater.Text = "Вода";
             this.checkBoxWater.UseVisualStyleBackColor = true;
+            this.checkBoxWater.CheckedChanged += new System.EventHandler(this.checkBoxWater_CheckedChanged);
             // 
             // dateFrom
             // 
