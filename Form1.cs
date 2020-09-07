@@ -15,19 +15,19 @@ namespace Pass
 {
     public partial class Form1 : Form
     {
-        private List<Guest> guests =new List<Guest>();
+        private List<Guest> guests = new List<Guest>();
         private string selectedFolder = @"C:\Users\ЛавроваЛЮ\Documents\пропуска\new";
-        
+
         private Note note;
         public Form1()
         {
             InitializeComponent();
-            
+
             note = new Note();
-            
+
         }
 
-        
+
         private void lastNameBox_TextChanged(object sender, EventArgs e)
         {
             string[] guestsWhoHaveVisited = Directory.GetFiles(selectedFolder);
@@ -85,7 +85,7 @@ namespace Pass
             switch (responsible)
             {
                 case Responsible.АксеновИД:
-                    note.From = new string[] { "Заместителя начальника научно-производственного комплекса", "по специальной техники И.Д. Аксенова"};
+                    note.From = new string[] { "Заместителя начальника научно-производственного комплекса", "по специальной техники И.Д. Аксенова" };
                     break;
                 case Responsible.ИвановАЕ:
                     note.From = new string[] { "Начальника 532 отдела «Конструирования мехатронных и управляющих", "систем специального назначения» А.Е. Иванова" };
@@ -145,7 +145,7 @@ namespace Pass
                 nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 5);
                 g.DrawString("От:", font12Bold, Brushes.Black, nextLine);
                 g.DrawString(note.From[0], font12, Brushes.Black, nextLine.X + 100, nextLine.Y);
-                if(note.From.Length > 1)
+                if (note.From.Length > 1)
                 {
                     nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 2);
                     g.DrawString(note.From[1], font12, Brushes.Black, nextLine.X + 100, nextLine.Y);
@@ -164,18 +164,41 @@ namespace Pass
             {
                 stringSize = Size.Ceiling(g.MeasureString(note.Appeal, font14));
                 g.DrawString(note.Appeal, font14, Brushes.Black, new Point(e.MarginBounds.X + (e.MarginBounds.Width - stringSize.Width) / 2, nextLine.Y));
-                nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 6);
-                g.DrawString("Прошу разрешить " + note.Allowance + " на территорию ЦНИИ РТК для " + ((checkBoxWater.Checked) ? "доставки": "участия"), font14, Brushes.Black, new Point(e.MarginBounds.X + 48, nextLine.Y));
-                nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 2);
+                nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 8);
+                g.DrawString("Прошу разрешить " + note.Allowance + " на территорию ЦНИИ РТК для " + ((checkBoxWater.Checked) ? "доставки" : "участия"), font14, Brushes.Black, new Point(e.MarginBounds.X + 48, nextLine.Y));
+                nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 1);
                 g.DrawString(note.Reason + ":", font14, Brushes.Black, new Point(e.MarginBounds.X, nextLine.Y));
                 nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 4);
             }
-            Point topCornerofTable = new Point(nextLine.X, nextLine.Y);
-            int tableX = nextLine.X;
-            int tableWidth = e.MarginBounds.Width;
-            int tableY = nextLine.Y;
-            tableY = note.PrintTableRow(g, tableX, tableWidth, tableY, new string[] { "Дата и", "время", "посещения" });
-            g.DrawRectangle(Pens.Black, topCornerofTable.X, topCornerofTable.Y, tableWidth, tableY);
+            List<int> tableY = new List<int>();
+            g.DrawLine(Pens.Black, nextLine.X, nextLine.Y, e.MarginBounds.Right, nextLine.Y);
+            tableY.Add(note.PrintTableRow(g, nextLine.X, nextLine.Y, new string[] { "Дата и", "время", "посещения" }));
+            List<int> columnWidth = new List<int> { nextLine.X + (int)g.MeasureString("посещения", new Font("Times New Roman", 12)).Width + 4};
+            columnWidth.Add(columnWidth[0] + (int)g.MeasureString("Отчество", new Font("Times New Roman", 12)).Width + 4);
+            tableY.Add(note.PrintTableColumn(g, columnWidth[0] + 4, columnWidth[1], nextLine.Y, new string[] { "Фамилия", "Имя", "Отчество" }));
+            columnWidth.Add(columnWidth[1] + (int)g.MeasureString("Следует", new Font("Times New Roman", 12)).Width + 4);
+            tableY.Add(note.PrintTableColumn(g, columnWidth[1] + 4, columnWidth[2], nextLine.Y, new string[] { "Следует", "(куда, к", "кому)" }));
+            columnWidth.Add(columnWidth[2] + (int)g.MeasureString("организации)", new Font("Times New Roman", 12)).Width + 4);
+            tableY.Add(note.PrintTableColumn(g, columnWidth[2] + 4, columnWidth[3], nextLine.Y, new string[] { "Следует", "(откуда", "из какой", "организации)" }));
+            columnWidth.Add(columnWidth[3] + (int)g.MeasureString("документа", new Font("Times New Roman", 12)).Width + 4);
+            tableY.Add(note.PrintTableColumn(g, columnWidth[3] + 4, columnWidth[4], nextLine.Y, new string[] { "Наиме-", "нование", "документа", "(серия", "номер)" }));
+            columnWidth.Add(columnWidth[4] + (int)g.MeasureString("транспор-", new Font("Times New Roman", 12)).Width + 4);
+            tableY.Add(note.PrintTableColumn(g, columnWidth[4] + 4, columnWidth[5], nextLine.Y, new string[] { "Вид и", "номер", "транспор-", "та" }));
+            columnWidth.Add(columnWidth[5] + (int)g.MeasureString("от ЦНИИ", new Font("Times New Roman", 12)).Width + 4);
+            tableY.Add(note.PrintTableColumn(g, columnWidth[5] + 4, columnWidth[6], nextLine.Y, new string[] { "Сопрово-", "ждающий", "от ЦНИИ", "РТК" }));
+            note.PrintVerticalLines(g, columnWidth, nextLine.Y, tableY.Max());
+            g.DrawLine(Pens.Black, nextLine.X, tableY.Max(), columnWidth[5], tableY.Max());
+        }
+
+        private int MeasureColumnWidth(Guest[] guests)
+        {
+            string[] content = new string[guests.Length];
+            for (int i = 0; i < guests.Length; i++)
+            {
+                content[i] = guests[i].Patronymic;
+            }
+            int width = content.Max(x => x.Length);
+            return width;
         }
 
         private void printPassButton_Click(object sender, EventArgs e)
