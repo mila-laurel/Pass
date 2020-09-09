@@ -79,7 +79,9 @@
             // dateFrom
             // 
             this.dateFrom.Location = new System.Drawing.Point(61, 92);
+            this.dateFrom.MinDate = new System.DateTime(2020, 9, 9, 0, 0, 0, 0);
             this.dateFrom.Name = "dateFrom";
+            this.dateFrom.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dateFrom.Size = new System.Drawing.Size(200, 20);
             this.dateFrom.TabIndex = 1;
             // 
