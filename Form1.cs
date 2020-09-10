@@ -43,12 +43,12 @@ namespace Pass
 
         private void lastNameBox_TextChanged(object sender, EventArgs e)
         {
-            string[] guestsWhoHaveVisited = Directory.GetFiles(selectedFolder);
+            string[] guestsWhoHaveVisited = Directory.GetFiles(selectedFolder, "*.guest");
             if (Array.Exists(guestsWhoHaveVisited, x => x.ToString().ToLower().Contains(lastNameBox.Text.ToLower())))
             {
                 lastNameBox.Items.AddRange(Array.FindAll(guestsWhoHaveVisited, x => x.ToString().ToLower().Contains(lastNameBox.Text.ToLower())));
                 Guest guest = new Guest();
-                guest.OpenFile(lastNameBox.SelectedItem.ToString());
+                guest.OpenFile(lastNameBox.SelectedItem.ToString() + ".guest");
             }
         }
 
@@ -72,10 +72,11 @@ namespace Pass
                 guest.CarInformation = null;
             guests.Add(guest);
             saveFileDialog1.InitialDirectory = selectedFolder;
+            saveFileDialog1.Filter = "Guest files (*.guest) | *.guest | All files (*.*) | *.*";
             if (File.Exists(lastNameBox.Text))
-                saveFileDialog1.FileName = lastNameBox.Text + " " + nameBox.Text;
+                 saveFileDialog1.FileName = lastNameBox.Text + " " + nameBox.Text + ".guest";
             else
-                saveFileDialog1.FileName = lastNameBox.Text;
+                saveFileDialog1.FileName = lastNameBox.Text + ".guest";
             DialogResult result = saveFileDialog1.ShowDialog();
             if (result == DialogResult.OK)
                 guest.Save(guest.LastName);

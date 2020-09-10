@@ -34,7 +34,7 @@ namespace Pass
 
         public void OpenFile(string lastName)
         {
-            this.LastName = lastName;
+            //this.LastName = lastName;
             BinaryFormatter formatter = new BinaryFormatter();
             Guest guest;
             using (Stream input = File.OpenRead(lastName))
