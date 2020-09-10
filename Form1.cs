@@ -15,6 +15,7 @@ namespace Pass
 {
     public partial class Form1 : Form
     {
+        private const int marginOfCell = 4;
         private List<Guest> guests = new List<Guest>();
         private string selectedFolder = @"C:\Users\ЛавроваЛЮ\Documents\пропуска\new";
         private string[] datesOfVisit;
@@ -24,7 +25,7 @@ namespace Pass
             set
             {
                 if (dateFrom.Value == dateTo.Value)
-                    datesOfVisit = new string[] {dateFrom.Value.ToString("dd.MM.YY"), dateTimePicker1.Value.ToString("H:mm") + "-", dateTimePicker2.Value.ToString("H:mm") };
+                    datesOfVisit = new string[] { dateFrom.Value.ToString("dd.MM.YY"), dateTimePicker1.Value.ToString("H:mm") + "-", dateTimePicker2.Value.ToString("H:mm") };
                 else
                     datesOfVisit = new string[] { dateFrom.Value.ToString("dd.MM.YY") + "-", dateTo.Value.ToString("dd.MM.YY"), dateTimePicker1.Value.ToString("H:mm") + "-", dateTimePicker2.Value.ToString("H:mm") };
             }
@@ -61,9 +62,14 @@ namespace Pass
             Guest guest = new Guest();
             guest.LastName = this.lastNameBox.Text;
             guest.Name = this.nameBox.Text;
+            guest.Patronymic = this.patronymBox.Text;
             guest.Company = this.companyComboBox.Text;
             guest.Document = this.document.Text;
             guest.DocumentNumber = this.textBoxNum.Text;
+            if (checkBoxCar.Checked)
+                guest.CarInformation = this.carInformation.Text;
+            else
+                guest.CarInformation = null;
             guests.Add(guest);
             saveFileDialog1.InitialDirectory = selectedFolder;
             if (File.Exists(lastNameBox.Text))
@@ -99,26 +105,44 @@ namespace Pass
                 case Responsible.АксеновИД:
                     note.From = new string[] { "Заместителя начальника научно-производственного комплекса", "по специальной техники И.Д. Аксенова" };
                     note.WhereToWhom = new string[] { "НПК", "Аксенову", "И.Д." };
+                    if (String.IsNullOrEmpty(textBoxEscort.Text))
+                        note.Escort = "Аксенов И.Д.";
                     break;
                 case Responsible.ИвановАЕ:
                     note.From = new string[] { "Начальника 532 отдела «Конструирования мехатронных и управляющих", "систем специального назначения» А.Е. Иванова" };
                     note.WhereToWhom = new string[] { "532 отд.", "Иванову", "А.Е." };
+                    if (String.IsNullOrEmpty(textBoxEscort.Text))
+                        note.Escort = "ИвановА.Е.";
                     break;
                 case Responsible.КоротковАЛ:
                     note.From = new string[] { "Начальника 111 отдела «Специальной техники» А.Л. Короткова" };
                     note.WhereToWhom = new string[] { "111 отд.", "Короткову", "А.Л." };
+                    if (String.IsNullOrEmpty(textBoxEscort.Text))
+                        note.Escort = "Коротков А.Л.";
                     break;
                 case Responsible.ПоповДС:
                     note.From = new string[] { "Начальника 52 Конструкторского бюро электронных систем и приборов", "Д.С. Попова" };
+                    note.WhereToWhom = new string[] { "52 КБ", "Попову", "Д.С." };
+                    if (String.IsNullOrEmpty(textBoxEscort.Text))
+                        note.Escort = "Попов Д.С.";
                     break;
                 case Responsible.ПрямицынИБ:
                     note.From = new string[] { "Начальника 531 отдела «Конструирования робототехнических систем»", "И.Б. Прямицына" };
+                    note.WhereToWhom = new string[] { "531 отд.", "Прямицыну", "И.Б." };
+                    if (String.IsNullOrEmpty(textBoxEscort.Text))
+                        note.Escort = "Прямицын И.Б.";
                     break;
                 case Responsible.РоговАВ:
                     note.From = new string[] { "Начальника 53 Конструкторского бюро мехатронных и корпусных изделий", "А.В. Рогова" };
+                    note.WhereToWhom = new string[] { "53 КБ", "Рогову", "А.В." };
+                    if (String.IsNullOrEmpty(textBoxEscort.Text))
+                        note.Escort = "Рогов А.В.";
                     break;
                 case Responsible.ШмаковОА:
                     note.From = new string[] { "Заместителя главного конструктора 11 ЦМРТК О.А. Шмакова" };
+                    note.WhereToWhom = new string[] { "11 ЦМРТК", "Шмакову", "О.А." };
+                    if (String.IsNullOrEmpty(textBoxEscort.Text))
+                        note.Escort = "Шмаков О.А.";
                     break;
             }
         }
@@ -181,40 +205,42 @@ namespace Pass
                 g.DrawString(note.Appeal, font14, Brushes.Black, new Point(e.MarginBounds.X + (e.MarginBounds.Width - stringSize.Width) / 2, nextLine.Y));
                 nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 8);
                 g.DrawString("Прошу разрешить " + note.Allowance + " на территорию ЦНИИ РТК для " + ((checkBoxWater.Checked) ? "доставки" : "участия"), font14, Brushes.Black, new Point(e.MarginBounds.X + 48, nextLine.Y));
-                nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 1);
+                nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height);
                 g.DrawString(note.Reason + ":", font14, Brushes.Black, new Point(e.MarginBounds.X, nextLine.Y));
-                nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + 4);
+                nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + marginOfCell);
             }
             List<int> tableY = new List<int>();
             g.DrawLine(Pens.Black, nextLine.X, nextLine.Y, e.MarginBounds.Right, nextLine.Y);
             tableY.Add(note.PrintTableColumn(g, nextLine.X, nextLine.Y, new string[] { "Дата и", "время", "посещения" }));
-            List<int> columnWidth = new List<int> { nextLine.X + (int)g.MeasureString("посещения", new Font("Times New Roman", 12)).Width + 4};
-            columnWidth.Add(columnWidth[0] + (guests.Count == 0 ? (int)g.MeasureString( "Отчество", new Font("Times New Roman", 12)).Width : MeasureColumnWidth(guests.ToArray()) + 4));
-            tableY.Add(note.PrintTableColumn(g, columnWidth[0] + 4, nextLine.Y, new string[] { "Фамилия", "Имя", "Отчество" }));
-            columnWidth.Add(columnWidth[1] + (int)g.MeasureString("Следует", new Font("Times New Roman", 12)).Width + 4);
-            tableY.Add(note.PrintTableColumn(g, columnWidth[1] + 4, nextLine.Y, new string[] { "Следует", "(куда, к", "кому)" }));
-            columnWidth.Add(columnWidth[2] + (int)g.MeasureString("организации)", new Font("Times New Roman", 12)).Width + 4);
-            tableY.Add(note.PrintTableColumn(g, columnWidth[2] + 4, nextLine.Y, new string[] { "Следует", "(откуда", "из какой", "организации)" }));
-            columnWidth.Add(columnWidth[3] + (int)g.MeasureString("документа", new Font("Times New Roman", 12)).Width + 4);
-            tableY.Add(note.PrintTableColumn(g, columnWidth[3] + 4, nextLine.Y, new string[] { "Наиме-", "нование", "документа", "(серия", "номер)" }));
-            columnWidth.Add(columnWidth[4] + (int)g.MeasureString("транспор-", new Font("Times New Roman", 12)).Width + 4);
-            tableY.Add(note.PrintTableColumn(g, columnWidth[4] + 4, nextLine.Y, new string[] { "Вид и", "номер", "транспор-", "та" }));
-            columnWidth.Add(columnWidth[5] + (int)g.MeasureString("от ЦНИИ", new Font("Times New Roman", 12)).Width + 4);
-            tableY.Add(note.PrintTableColumn(g, columnWidth[5] + 4, nextLine.Y, new string[] { "Сопрово-", "ждающий", "от ЦНИИ", "РТК" }));
+            List<int> columnWidth = new List<int> { nextLine.X + (int)g.MeasureString("посещения", new Font("Times New Roman", 12)).Width + marginOfCell };
+            columnWidth.Add(columnWidth[0] + ((guests.Count == 0) || (((int)MeasureColumnWidth(guests.ToArray(), g) + marginOfCell) < (int)g.MeasureString("Отчество", new Font("Times New Roman", 12)).Width) ? (int)g.MeasureString("Отчество", new Font("Times New Roman", 12)).Width : MeasureColumnWidth(guests.ToArray(), g) + marginOfCell));
+            tableY.Add(note.PrintTableColumn(g, columnWidth[0] + marginOfCell, nextLine.Y, new string[] { "Фамилия", "Имя", "Отчество" }));
+            columnWidth.Add(columnWidth[1] + (int)g.MeasureString("Следует", new Font("Times New Roman", 12)).Width + marginOfCell);
+            tableY.Add(note.PrintTableColumn(g, columnWidth[1] + marginOfCell, nextLine.Y, new string[] { "Следует", "(куда, к", "кому)" }));
+            columnWidth.Add(columnWidth[2] + (int)g.MeasureString("организации)", new Font("Times New Roman", 12)).Width + marginOfCell);
+            tableY.Add(note.PrintTableColumn(g, columnWidth[2] + marginOfCell, nextLine.Y, new string[] { "Следует", "(откуда", "из какой", "организации)" }));
+            columnWidth.Add(columnWidth[3] + (int)g.MeasureString("документа", new Font("Times New Roman", 12)).Width + marginOfCell);
+            tableY.Add(note.PrintTableColumn(g, columnWidth[3] + marginOfCell, nextLine.Y, new string[] { "Наиме-", "нование", "документа", "(серия", "номер)" }));
+            columnWidth.Add(columnWidth[4] + (int)g.MeasureString("транспор-", new Font("Times New Roman", 12)).Width + marginOfCell);
+            tableY.Add(note.PrintTableColumn(g, columnWidth[4] + marginOfCell, nextLine.Y, new string[] { "Вид и", "номер", "транспор-", "та" }));
+            columnWidth.Add(columnWidth[5] + (int)g.MeasureString("от ЦНИИ", new Font("Times New Roman", 12)).Width + marginOfCell);
+            tableY.Add(note.PrintTableColumn(g, columnWidth[5] + marginOfCell, nextLine.Y, new string[] { "Сопрово-", "ждающий", "от ЦНИИ", "РТК" }));
             note.PrintVerticalLines(g, columnWidth, nextLine.Y, tableY.Max());
-            g.DrawLine(Pens.Black, nextLine.X, tableY.Max(), columnWidth[5], tableY.Max());
+            note.PrintGuestInformation(g, guests, datesOfVisit, nextLine, columnWidth, marginOfCell);
+            g.DrawRectangle(Pens.Black, nextLine.X, nextLine.Y, columnWidth[5], tableY.Max());
         }
 
-        private int MeasureColumnWidth(Guest[] guests)
+        private int MeasureColumnWidth(Guest[] guests, Graphics g)
         {
             List<string> content = new List<string>();
             for (int i = 0; i < guests.Length; i++)
             {
-                content.Add(guests[i].Patronymic);
+                if (guests[i].Patronymic != null)
+                    content.Add(guests[i].Patronymic);
                 content.Add(guests[i].LastName);
             }
-            int width = content.Max(x => x.Length);
-            return width;
+            string widestWord = content.OrderByDescending(x => x.Length).First();
+            return (int)g.MeasureString(widestWord, new Font("Times New Roman", 12)).Width;
         }
 
         private void printPassButton_Click(object sender, EventArgs e)
@@ -244,6 +270,11 @@ namespace Pass
                 note.Allowance = "въезд";
                 note.Reason = "питьевой воды";
             }
+        }
+
+        private void textBoxEscort_TextChanged(object sender, EventArgs e)
+        {
+            note.Escort = textBoxEscort.Text;
         }
     }
 }

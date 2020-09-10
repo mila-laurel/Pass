@@ -62,6 +62,8 @@
             this.printPassButton = new System.Windows.Forms.ToolStripButton();
             this.checkBoxGates = new System.Windows.Forms.CheckBox();
             this.reasonBox = new System.Windows.Forms.ComboBox();
+            this.textBoxEscort = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -381,12 +383,31 @@
             this.reasonBox.TabIndex = 31;
             this.reasonBox.TextChanged += new System.EventHandler(this.reasonBox_TextChanged);
             // 
+            // textBoxEscort
+            // 
+            this.textBoxEscort.Location = new System.Drawing.Point(490, 203);
+            this.textBoxEscort.Name = "textBoxEscort";
+            this.textBoxEscort.Size = new System.Drawing.Size(163, 20);
+            this.textBoxEscort.TabIndex = 32;
+            this.textBoxEscort.TextChanged += new System.EventHandler(this.textBoxEscort_TextChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(490, 184);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(99, 13);
+            this.label10.TabIndex = 33;
+            this.label10.Text = "Сопровождающий";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.ClientSize = new System.Drawing.Size(915, 635);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.textBoxEscort);
             this.Controls.Add(this.reasonBox);
             this.Controls.Add(this.checkBoxGates);
             this.Controls.Add(this.toolStrip1);
@@ -460,6 +481,8 @@
         private System.Windows.Forms.ToolStripButton printPassButton;
         private System.Windows.Forms.CheckBox checkBoxGates;
         private System.Windows.Forms.ComboBox reasonBox;
+        private System.Windows.Forms.TextBox textBoxEscort;
+        private System.Windows.Forms.Label label10;
     }
 }
 

@@ -17,6 +17,7 @@ namespace Pass
         public string Company { get; set; }
         public string Document { get; set; }
         public string DocumentNumber { get; set; }
+        public string CarInformation { get; set; }
         public Guest()
         {
             LastName = "";
@@ -45,6 +46,7 @@ namespace Pass
             Company = guest.Company;
             Document = guest.Document;
             DocumentNumber = guest.DocumentNumber;
+            CarInformation = guest.CarInformation;
         }
     }
 }
