@@ -210,7 +210,6 @@ namespace Pass
                 nextLine = new Point(nextLine.X, nextLine.Y + stringSize.Height + marginOfCell);
             }
             List<int> tableY = new List<int>();
-            g.DrawLine(Pens.Black, nextLine.X, nextLine.Y, e.MarginBounds.Right, nextLine.Y);
             tableY.Add(note.PrintTableColumn(g, nextLine.X, nextLine.Y, new string[] { "Дата и", "время", "посещения" }));
             List<int> columnWidth = new List<int> { nextLine.X + (int)g.MeasureString("посещения", new Font("Times New Roman", 12)).Width + marginOfCell };
             columnWidth.Add(columnWidth[0] + ((guests.Count == 0) || (((int)MeasureColumnWidth(guests.ToArray(), g) + marginOfCell) < (int)g.MeasureString("Отчество", new Font("Times New Roman", 12)).Width) ? (int)g.MeasureString("Отчество", new Font("Times New Roman", 12)).Width : MeasureColumnWidth(guests.ToArray(), g) + marginOfCell));
