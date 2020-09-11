@@ -86,6 +86,7 @@
             this.dateFrom.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dateFrom.Size = new System.Drawing.Size(200, 20);
             this.dateFrom.TabIndex = 1;
+            this.dateFrom.ValueChanged += new System.EventHandler(this.dateFrom_ValueChanged);
             // 
             // label1
             // 

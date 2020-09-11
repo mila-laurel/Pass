@@ -23,21 +23,21 @@ namespace Pass
             LastName = "";
         }
 
-        public void Save(string lastName)
+        public void Save(string path)
         {
             BinaryFormatter formatter = new BinaryFormatter();
-            using (Stream output = File.OpenWrite(lastName))
+            using (Stream output = File.OpenWrite(path))
             {
                 formatter.Serialize(output, this);
             }
         }
 
-        public void OpenFile(string lastName)
+        public void OpenFile(string path)
         {
             //this.LastName = lastName;
             BinaryFormatter formatter = new BinaryFormatter();
             Guest guest;
-            using (Stream input = File.OpenRead(lastName))
+            using (Stream input = File.OpenRead(path))
             {
                 guest = (Guest)formatter.Deserialize(input);
             }

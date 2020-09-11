@@ -22,20 +22,20 @@ namespace Pass
             Reason = "в совещании";
         }
 
-        public int PrintTableColumn(Graphics printGraphics, int tableX, int tableY, string[] content)
+        public int PrintTableColumn(Graphics printGraphics, int tableX, int lineY, string[] content)
         {
-            int initialY = tableY;
             Font font12 = new Font("Times New Roman", 12);
             Size stringSize;
-            tableY += 2;
-            foreach (string c in content)
+            lineY += 2;
+            for (int i = 0; i < content.Length; i++)
             {
-                stringSize = Size.Ceiling(printGraphics.MeasureString(c, font12));
-                printGraphics.DrawString(c, font12, Brushes.Black, tableX + 2, tableY);
-                tableY += (int)stringSize.Height + 2;
+                stringSize = Size.Ceiling(printGraphics.MeasureString(content[i], font12));
+                printGraphics.DrawString(content[i], font12, Brushes.Black, tableX + 2, lineY);
+                lineY += (int)stringSize.Height + 2;
             }
+           
             font12.Dispose();
-            return tableY;
+            return lineY;
         }
 
         public void PrintVerticalLines(Graphics graphics, List<int> columnWidth, int initialY, int maxTableY)

@@ -17,27 +17,18 @@ namespace Pass
     {
         private const int marginOfCell = 4;
         private List<Guest> guests = new List<Guest>();
-        private string selectedFolder = @"C:\Users\ЛавроваЛЮ\Documents\пропуска\new";
-        private string[] datesOfVisit;
-        public string[] DatesOfVisit
-        {
-            get { return datesOfVisit; }
-            set
-            {
-                if (dateFrom.Value == dateTo.Value)
-                    datesOfVisit = new string[] { dateFrom.Value.ToString("dd.MM.YY"), dateTimePicker1.Value.ToString("H:mm") + "-", dateTimePicker2.Value.ToString("H:mm") };
-                else
-                    datesOfVisit = new string[] { dateFrom.Value.ToString("dd.MM.YY") + "-", dateTo.Value.ToString("dd.MM.YY"), dateTimePicker1.Value.ToString("H:mm") + "-", dateTimePicker2.Value.ToString("H:mm") };
-            }
-        }
+        private string selectedFolder = @"C:\Users\ЛавроваЛЮ\Documents\пропуска\new\";
+        
+        public string[] DatesOfVisit { get; private set; }
 
         private Note note;
         public Form1()
         {
             InitializeComponent();
-
+            dateFrom.Value = DateTime.Now;
+            dateTo.Value = DateTime.Now;
             note = new Note();
-
+            DatesOfVisit = DateTimeSet();
         }
 
 
@@ -48,7 +39,7 @@ namespace Pass
             {
                 lastNameBox.Items.AddRange(Array.FindAll(guestsWhoHaveVisited, x => x.ToString().ToLower().Contains(lastNameBox.Text.ToLower())));
                 Guest guest = new Guest();
-                guest.OpenFile(lastNameBox.SelectedItem.ToString() + ".guest");
+                guest.OpenFile(selectedFolder + lastNameBox.SelectedItem.ToString() + ".guest");
             }
         }
 
@@ -73,13 +64,13 @@ namespace Pass
             guests.Add(guest);
             saveFileDialog1.InitialDirectory = selectedFolder;
             saveFileDialog1.Filter = "Guest files (*.guest) | *.guest | All files (*.*) | *.*";
-            if (File.Exists(lastNameBox.Text))
-                 saveFileDialog1.FileName = lastNameBox.Text + " " + nameBox.Text + ".guest";
+            if (File.Exists(lastNameBox.Text + ".guest"))
+                 saveFileDialog1.FileName = lastNameBox.Text + " " + nameBox.Text;
             else
-                saveFileDialog1.FileName = lastNameBox.Text + ".guest";
+                saveFileDialog1.FileName = lastNameBox.Text;
             DialogResult result = saveFileDialog1.ShowDialog();
             if (result == DialogResult.OK)
-                guest.Save(guest.LastName);
+                guest.Save(selectedFolder + guest.LastName);
         }
 
         private void toWhom_SelectedIndexChanged(object sender, EventArgs e)
@@ -226,8 +217,8 @@ namespace Pass
             columnWidth.Add(columnWidth[5] + (int)g.MeasureString("от ЦНИИ", new Font("Times New Roman", 12)).Width + marginOfCell);
             tableY.Add(note.PrintTableColumn(g, columnWidth[5] + marginOfCell, nextLine.Y, new string[] { "Сопрово-", "ждающий", "от ЦНИИ", "РТК" }));
             note.PrintVerticalLines(g, columnWidth, nextLine.Y, tableY.Max());
-            note.PrintGuestInformation(g, guests, datesOfVisit, nextLine, columnWidth, marginOfCell);
-            g.DrawRectangle(Pens.Black, nextLine.X, nextLine.Y, columnWidth[5], tableY.Max());
+            note.PrintGuestInformation(g, guests, DatesOfVisit, new Point(nextLine.X, tableY.Max()), columnWidth, marginOfCell);
+            g.DrawRectangle(Pens.Black, nextLine.X, nextLine.Y, columnWidth[5] + marginOfCell, tableY.Max());
         }
 
         private int MeasureColumnWidth(Guest[] guests, Graphics g)
@@ -275,6 +266,22 @@ namespace Pass
         private void textBoxEscort_TextChanged(object sender, EventArgs e)
         {
             note.Escort = textBoxEscort.Text;
+        }
+
+        private void dateFrom_ValueChanged(object sender, EventArgs e)
+        {
+            dateTo.Value = dateFrom.Value;
+            DatesOfVisit = DateTimeSet();
+        }
+
+        private string[] DateTimeSet()
+        {
+            string[] datesOfVisit;
+            if (dateFrom.Value == dateTo.Value)
+                datesOfVisit = new string[] { dateFrom.Value.ToString("dd.MM.YY"), dateTimePicker1.Value.ToString("H:mm") + "-", dateTimePicker2.Value.ToString("H:mm") };
+            else
+                datesOfVisit = new string[] { dateFrom.Value.ToString("dd.MM.YY") + "-", dateTo.Value.ToString("dd.MM.YY"), dateTimePicker1.Value.ToString("H:mm") + "-", dateTimePicker2.Value.ToString("H:mm") };
+            return datesOfVisit;
         }
     }
 }
