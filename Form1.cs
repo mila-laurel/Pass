@@ -34,12 +34,11 @@ namespace Pass
 
         private void lastNameBox_TextChanged(object sender, EventArgs e)
         {
-            string[] guestsWhoHaveVisited = Directory.GetFiles(selectedFolder, "*.guest");
+            //string[] guestsWhoHaveVisited = Directory.GetFiles(selectedFolder, "*.guest");
+            string[] guestsWhoHaveVisited = Directory.GetFiles(selectedFolder);
             if (Array.Exists(guestsWhoHaveVisited, x => x.ToString().ToLower().Contains(lastNameBox.Text.ToLower())))
             {
                 lastNameBox.Items.AddRange(Array.FindAll(guestsWhoHaveVisited, x => x.ToString().ToLower().Contains(lastNameBox.Text.ToLower())));
-                Guest guest = new Guest();
-                guest.OpenFile(selectedFolder + lastNameBox.SelectedItem.ToString() + ".guest");
             }
         }
 
@@ -282,6 +281,12 @@ namespace Pass
             else
                 datesOfVisit = new string[] { dateFrom.Value.ToString("dd.MM.YY") + "-", dateTo.Value.ToString("dd.MM.YY"), dateTimePicker1.Value.ToString("H:mm") + "-", dateTimePicker2.Value.ToString("H:mm") };
             return datesOfVisit;
+        }
+
+        private void lastNameBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Guest guest = new Guest();
+            guest.OpenFile(selectedFolder + lastNameBox.SelectedItem.ToString() + ".guest");
         }
     }
 }

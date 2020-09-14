@@ -33,7 +33,6 @@ namespace Pass
                 printGraphics.DrawString(content[i], font12, Brushes.Black, tableX + 2, lineY);
                 lineY += (int)stringSize.Height + 2;
             }
-           
             font12.Dispose();
             return lineY;
         }
@@ -52,14 +51,14 @@ namespace Pass
             {
                 List<int> tableY = new List<int>();
                 tableY.Add(PrintTableColumn(graphics, nextLine.X, nextLine.Y, datesOfVisit));
-                tableY.Add(PrintTableColumn(graphics, columnWidth[0] + margin, nextLine.Y, new string[] { guest.LastName, guest.Name, guest.Patronymic }));
-                tableY.Add(PrintTableColumn(graphics, columnWidth[1] + margin, nextLine.Y, WhereToWhom));
-                tableY.Add(PrintTableColumn(graphics, columnWidth[2] + margin, nextLine.Y, BreakLine(graphics, guest.Company, columnWidth[3]).ToArray()));
+                tableY.Add(PrintTableColumn(graphics, columnWidth[0] + margin, tableY[0], new string[] { guest.LastName, guest.Name, guest.Patronymic }));
+                tableY.Add(PrintTableColumn(graphics, columnWidth[1] + margin, tableY[1], WhereToWhom));
+                tableY.Add(PrintTableColumn(graphics, columnWidth[2] + margin, tableY[2], BreakLine(graphics, guest.Company, columnWidth[3]).ToArray()));
                 List<string> documentsInfo = BreakLine(graphics, guest.Document, columnWidth[4]);
                 documentsInfo.AddRange(BreakLine(graphics, guest.DocumentNumber, columnWidth[4]));
-                tableY.Add(PrintTableColumn(graphics, columnWidth[3] + margin, nextLine.Y, documentsInfo.ToArray()));
-                tableY.Add(PrintTableColumn(graphics, columnWidth[4] + margin, nextLine.Y, BreakLine(graphics, guest.CarInformation, columnWidth[5]).ToArray()));
-                tableY.Add(PrintTableColumn(graphics, columnWidth[5] + margin, nextLine.Y, Escort.Split(' ')));
+                tableY.Add(PrintTableColumn(graphics, columnWidth[3] + margin, tableY[3], documentsInfo.ToArray()));
+                tableY.Add(PrintTableColumn(graphics, columnWidth[4] + margin, tableY[4], BreakLine(graphics, guest.CarInformation, columnWidth[5]).ToArray()));
+                tableY.Add(PrintTableColumn(graphics, columnWidth[5] + margin, tableY[5], Escort.Split(' ')));
                 PrintVerticalLines(graphics, columnWidth, nextLine.Y, tableY.Max());
             }
         }

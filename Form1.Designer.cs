@@ -180,6 +180,7 @@
             this.lastNameBox.Name = "lastNameBox";
             this.lastNameBox.Size = new System.Drawing.Size(205, 21);
             this.lastNameBox.TabIndex = 10;
+            this.lastNameBox.SelectedIndexChanged += new System.EventHandler(this.lastNameBox_SelectedIndexChanged);
             this.lastNameBox.TextChanged += new System.EventHandler(this.lastNameBox_TextChanged);
             // 
             // label5
