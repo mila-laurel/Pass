@@ -38,6 +38,10 @@ namespace Pass
             string[] guestsWhoHaveVisited = Directory.GetFiles(selectedFolder);
             if (Array.Exists(guestsWhoHaveVisited, x => x.ToString().ToLower().Contains(lastNameBox.Text.ToLower())))
             {
+                for (int i = 0; i < guestsWhoHaveVisited.Length; i++)
+                {
+                    guestsWhoHaveVisited[i] = Path.GetFileName(guestsWhoHaveVisited[i]);
+                }
                 lastNameBox.Items.AddRange(Array.FindAll(guestsWhoHaveVisited, x => x.ToString().ToLower().Contains(lastNameBox.Text.ToLower())));
             }
         }
@@ -61,15 +65,6 @@ namespace Pass
             else
                 guest.CarInformation = null;
             guests.Add(guest);
-            saveFileDialog1.InitialDirectory = selectedFolder;
-            saveFileDialog1.Filter = "Guest files (*.guest) | *.guest | All files (*.*) | *.*";
-            if (File.Exists(lastNameBox.Text + ".guest"))
-                 saveFileDialog1.FileName = lastNameBox.Text + " " + nameBox.Text;
-            else
-                saveFileDialog1.FileName = lastNameBox.Text;
-            DialogResult result = saveFileDialog1.ShowDialog();
-            if (result == DialogResult.OK)
-                guest.Save(selectedFolder + guest.LastName);
         }
 
         private void toWhom_SelectedIndexChanged(object sender, EventArgs e)
@@ -287,6 +282,30 @@ namespace Pass
         {
             Guest guest = new Guest();
             guest.OpenFile(selectedFolder + lastNameBox.SelectedItem.ToString() + ".guest");
+        }
+
+        private void saveToolStripButton_Click(object sender, EventArgs e)
+        {
+            Guest guest = new Guest();
+            guest.LastName = this.lastNameBox.Text;
+            guest.Name = this.nameBox.Text;
+            guest.Patronymic = this.patronymBox.Text;
+            guest.Company = this.companyComboBox.Text;
+            guest.Document = this.document.Text;
+            guest.DocumentNumber = this.textBoxNum.Text;
+            if (checkBoxCar.Checked)
+                guest.CarInformation = this.carInformation.Text;
+            else
+                guest.CarInformation = null;
+            saveFileDialog1.InitialDirectory = selectedFolder;
+            saveFileDialog1.Filter = "Guest files (*.guest) | *.guest | All files (*.*) | *.*";
+            if (File.Exists(lastNameBox.Text + ".guest"))
+                saveFileDialog1.FileName = lastNameBox.Text + " " + nameBox.Text + ".guest";
+            else
+                saveFileDialog1.FileName = lastNameBox.Text + ".guest";
+            DialogResult result = saveFileDialog1.ShowDialog();
+            if (result == DialogResult.OK)
+                guest.Save(selectedFolder + guest.LastName);
         }
     }
 }
