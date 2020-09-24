@@ -39,9 +39,9 @@ namespace Pass
 
         public void PrintVerticalLines(Graphics graphics, List<int> columnWidth, int initialY, int maxTableY)
         {
-            foreach (int width in columnWidth)
+            for (int i = 0; i < columnWidth.Count()-1; i++)
             {
-                graphics.DrawLine(Pens.Black, width + 4, initialY, width + 4, maxTableY);
+                graphics.DrawLine(Pens.Black, columnWidth[i] + 4, initialY, columnWidth[i] + 4, maxTableY);
             }
         }
 
